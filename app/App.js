@@ -1,7 +1,10 @@
+import { round } from 'lodash'
 import React from 'react'
 import { StyleSheet, Text, TextInput, View } from 'react-native'
 
-const calculateTip = (bill, tip) => (!bill || !tip) ? 0 : bill * tip
+const DECIMAL_PLACES = 2
+const percentage = (amount) => amount * .01
+const calculateTip = (bill, tip) => (!bill || !tip) ? 0 : round(bill * percentage(tip), DECIMAL_PLACES)
 
 export default function App() {
   const [bill, setBill] = useState(0)
