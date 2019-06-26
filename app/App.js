@@ -1,10 +1,10 @@
-import { round } from 'lodash'
-import React from 'react'
+import { round, toString } from 'lodash'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, TextInput, View } from 'react-native'
 
 const DECIMAL_PLACES = 2
-const percentage = (amount) => amount * .01
-const calculateTip = (bill, tip) => (!bill || !tip) ? 0 : round(bill * percentage(tip), DECIMAL_PLACES)
+const toPercent = (amount) => amount * .01
+const calculateTip = (bill, tip) => (!bill || !tip) ? 0 : round(bill * toPercent(tip), DECIMAL_PLACES)
 
 export default function App() {
   const [bill, setBill] = useState(0)
@@ -18,9 +18,9 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Total Bill Amount: $</Text>
-      <TextInput keyboardType='numeric' onChange={setBill} value={bill} />
+      <TextInput keyboardType='numeric' onChange={(e) => setBill(e.target.value ? round(e.target.value, DECIMAL_PLACES) : '')} value={toString(bill)} />
       <Text>Tip Percentage: </Text>
-      <TextInput keyboardType='numeric' onChange={setTip} value={tip} />
+      <TextInput keyboardType='numeric' onChange={(e) => setTip(e.target.value ? e.target.value : '')} value={toString(tip)} />
       <Text>Tip Amount: {calculatedTip}</Text>
     </View>
   )
